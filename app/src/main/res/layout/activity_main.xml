@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    
+
+    <!-- App Bar  -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -52,6 +53,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- Content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -63,6 +65,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!--LIVE SUMMARY Card -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,6 +135,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     />
 
+                <!--TODO: Add bounce effect -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnViewDetails"
                     android:layout_width="wrap_content"
@@ -149,6 +153,31 @@
                     app:layout_constraintTop_toBottomOf="@id/dividerLiveSummary"
                     app:layout_constraintEnd_toEndOf="@id/dividerLiveSummary"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- QUICK ACTIONS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="24dp">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="5dp"
+                    android:background="#135BEC"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/quick_actions"
+                    android:fontFamily="@font/space_grotesk"
+                    android:textStyle="bold|italic"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
