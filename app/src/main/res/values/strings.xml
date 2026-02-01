@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Stora</string>
+    <string name="live_summary">LIVE SUMMARY</string>
+    <string name="percentage_badge">+12.5%</string>
+    <string name="idr_live_summary">Rp 20.000</string>
+    <string name="todays_total_sales">Today&apos;s Total Sales</string>
+    <string name="view_details">VIEW DETAILS</string>
 </resources>
