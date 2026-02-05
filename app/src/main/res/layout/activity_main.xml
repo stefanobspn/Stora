@@ -117,7 +117,7 @@
                     android:id="@+id/dividerLiveSummary"
                     android:layout_width="0dp"
                     android:layout_height="2dp"
-                    android:background="@color/gray"
+                    android:background="@color/black_50"
                     android:layout_marginTop="10dp"
                     app:layout_constraintTop_toBottomOf="@id/idrLiveSummaryTV"
                     app:layout_constraintStart_toStartOf="@+id/idrLiveSummaryTV"
@@ -158,25 +158,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:layout_marginTop="24dp">
 
-                <View
-                    android:layout_width="4dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="5dp"
-                    android:background="#135BEC"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <!-- TITLE SECTION -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="@string/quick_actions"
-                    android:fontFamily="@font/space_grotesk"
-                    android:textStyle="bold|italic"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"/>
+                    android:gravity="center_vertical">
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="5dp"
+                        android:background="#135BEC"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/quick_actions"
+                        android:fontFamily="@font/space_grotesk"
+                        android:textStyle="bold|italic"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+
+
             </LinearLayout>
+
 
         </LinearLayout>
 
