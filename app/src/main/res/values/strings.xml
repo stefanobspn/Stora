@@ -1,12 +1,21 @@
 <resources>
     <string name="app_name">Stora</string>
+
     <string name="live_summary">LIVE SUMMARY</string>
-    <string name="percentage_badge">+12.5%</string>
-    <string name="idr_live_summary">Rp 20.000</string>
-    <string name="todays_total_sales">Today's Total Sales</string>
+    <string name="dashboard">DASHBOARD</string>
+    <string name="quick_actions">Quick Actions</string>
+
+    <string name="percentage_format">%s%%</string>
+    <string name="idr_currency_format">Rp %s</string>
+
+    <string name="todays_total_sales">Today\'s Total Sales</string>
     <string name="view_details">VIEW DETAILS</string>
     <string name="account">Account</string>
-    <string name="dashboard">DASHBOARD</string>
     <string name="notification">Notification</string>
-    <string name="quick_actions">QUICK ACTIONS</string>
+    <string name="new_sale">New Sale</string>
+    <string name="stock">Stock</string>
+    <string name="refunds">Refunds</string>
+    <string name="reports">Reports</string>
+    <string name="section_title">SECTION TITLE</string>
+    <string name="quick_action_card_placeholder">ACTION NAME</string>
 </resources>
