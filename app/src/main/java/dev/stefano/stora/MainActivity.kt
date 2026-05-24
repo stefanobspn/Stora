@@ -13,8 +13,12 @@ import dev.stefano.stora.ui.navigation.AddProductRoute
 import dev.stefano.stora.ui.product.AddProductView
 import dev.stefano.stora.ui.navigation.DashBoardRoute
 import dev.stefano.stora.ui.navigation.ProductRoute
+import dev.stefano.stora.ui.navigation.TransactionRoute
 import dev.stefano.stora.ui.product.ProductView
 import dev.stefano.stora.ui.dashboard.DashboardView
+import dev.stefano.stora.ui.dashboard.DashboardViewModel
+import dev.stefano.stora.ui.transaction.TransactionView
+import dev.stefano.stora.ui.transaction.TransactionViewModel
 import dev.stefano.stora.ui.shared.ProductViewModel
 import dev.stefano.stora.ui.theme.StoraTheme
 
@@ -33,9 +37,24 @@ class MainActivity : ComponentActivity() {
                     startDestination = DashBoardRoute
                 ) {
                     composable<DashBoardRoute> {
+                        val dashboardViewModel: DashboardViewModel = hiltViewModel()
                         DashboardView(
+                            viewModel = dashboardViewModel,
                             onNavigateToProduct = {
                                 navController.navigate(ProductRoute)
+                            },
+                            onNavigateToTransaction = {
+                                navController.navigate(TransactionRoute)
+                            }
+                        )
+                    }
+
+                    composable<TransactionRoute> {
+                        val transactionViewModel: TransactionViewModel = hiltViewModel()
+                        TransactionView(
+                            viewModel = transactionViewModel,
+                            onNavigateBack = {
+                                navController.popBackStack()
                             }
                         )
                     }

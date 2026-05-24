@@ -24,6 +24,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -31,11 +33,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 
+import java.text.NumberFormat
+import java.util.Locale
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardView(
-    onNavigateToProduct: () -> Unit
+    viewModel: DashboardViewModel,
+    onNavigateToProduct: () -> Unit,
+    onNavigateToTransaction: () -> Unit
 ) {
+    val totalRevenue by viewModel.totalRevenue.collectAsState()
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(title = { Text("Dashboard POS") })
@@ -56,7 +65,11 @@ fun DashboardView(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text("Total Pendapatan", style = MaterialTheme.typography.labelLarge)
-                    Text("Rp25.000.000", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+                    Text(
+                        totalRevenue.toRupiahFormat(),
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
 
@@ -76,7 +89,7 @@ fun DashboardView(
                     label = "Transaksi",
                     icon = Icons.Default.ShoppingCart,
                     modifier = Modifier.weight(1f),
-                    onClick = { /* soon for transaction */ }
+                    onClick = onNavigateToTransaction
                 )
             }
 
@@ -97,7 +110,7 @@ fun DashboardView(
                     label = "Member",
                     icon = Icons.Default.Star,
                     modifier = Modifier.weight(1f),
-                    onClick = { /* soon for printer */ }
+                    onClick = { /* soon for member */ }
                 )
             }
 
@@ -107,6 +120,13 @@ fun DashboardView(
         }
     }
 }
+
+private fun Double.toRupiahFormat(): String {
+    val localeID = Locale("id", "ID")
+    val numberFormat = NumberFormat.getNumberInstance(localeID)
+    return "Rp ${numberFormat.format(this)}"
+}
+
 @Composable
 fun DashboardButton(
     label: String,

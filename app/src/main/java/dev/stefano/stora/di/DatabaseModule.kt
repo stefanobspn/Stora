@@ -10,8 +10,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.stefano.stora.data.database.AppDatabase
 import dev.stefano.stora.data.model.ProductDao
+import dev.stefano.stora.data.model.TransactionDao
 import dev.stefano.stora.data.repository.ProductRepository
 import dev.stefano.stora.data.repository.ProductRepositoryImpl
+import dev.stefano.stora.data.repository.TransactionRepository
+import dev.stefano.stora.data.repository.TransactionRepositoryImpl
 import javax.inject.Singleton
 
 @Module
@@ -24,17 +27,24 @@ object DatabaseModule {
             context,
             AppDatabase::class.java,
             "pos_database"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides
     fun provideProductDao(db: AppDatabase): ProductDao = db.productDao()
+
+    @Provides
+    fun provideTransactionDao(db: AppDatabase): TransactionDao = db.transactionDao()
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModule  {
+abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindProductRepository(impl: ProductRepositoryImpl): ProductRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindTransactionRepository(impl: TransactionRepositoryImpl): TransactionRepository
 }

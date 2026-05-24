@@ -10,3 +10,6 @@ object AddProductRoute
 
 @Serializable
 object ProductRoute
+
+@Serializable
+object TransactionRoute
