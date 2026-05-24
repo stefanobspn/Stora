@@ -41,7 +41,8 @@ import java.util.Locale
 fun DashboardView(
     viewModel: DashboardViewModel,
     onNavigateToProduct: () -> Unit,
-    onNavigateToTransaction: () -> Unit
+    onNavigateToTransaction: () -> Unit,
+    onNavigateToReport: () -> Unit
 ) {
     val totalRevenue by viewModel.totalRevenue.collectAsState()
 
@@ -103,7 +104,7 @@ fun DashboardView(
                     label = "Laporan",
                     icon = Icons.Default.Monitor,
                     modifier = Modifier.weight(1f),
-                    onClick = { /* soon for laporan */ }
+                    onClick = onNavigateToReport
                 )
 
                 DashboardButton(

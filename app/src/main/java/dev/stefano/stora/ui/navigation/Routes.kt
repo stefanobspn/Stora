@@ -13,3 +13,6 @@ object ProductRoute
 
 @Serializable
 object TransactionRoute
+
+@Serializable
+object ReportRoute
