@@ -8,6 +8,8 @@ import javax.inject.Inject
 interface ProductRepository {
     fun getAllProducts(): Flow<List<Product>>
     suspend fun insertProduct(product: Product)
+    suspend fun updateProduct(product: Product)
+    suspend fun deleteProduct(product: Product)
 }
 
 class ProductRepositoryImpl @Inject constructor(
@@ -15,5 +17,7 @@ class ProductRepositoryImpl @Inject constructor(
 ): ProductRepository {
     override fun getAllProducts(): Flow<List<Product>> = productDao.getAllProducts()
     override suspend fun insertProduct(product: Product) = productDao.insertProduct(product)
+    override suspend fun updateProduct(product: Product) = productDao.updateProduct(product)
+    override suspend fun deleteProduct(product: Product) = productDao.deleteProduct(product)
 }
 

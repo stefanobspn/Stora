@@ -45,7 +45,14 @@ fun ProductView(
     val products by viewModel.allProducts.collectAsState()
     ProductViewContent(
         products = products,
-        onNavigateToAddProduct = onNavigateToAddProduct,
+        onNavigateToAddProduct = {
+            viewModel.setProductForEditing(null)
+            onNavigateToAddProduct()
+        },
+        onNavigateToEditProduct = { product ->
+            viewModel.setProductForEditing(product)
+            onNavigateToAddProduct()
+        },
         onNavigateBack = onNavigateBack
     )
 }
@@ -55,6 +62,7 @@ fun ProductView(
 fun ProductViewContent(
     products: List<Product>,
     onNavigateToAddProduct: () -> Unit,
+    onNavigateToEditProduct: (Product) -> Unit,
     onNavigateBack: () -> Unit
 ) {
     Scaffold(
@@ -95,7 +103,10 @@ fun ProductViewContent(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(products) {product ->
-                        ProductItemRow(product)
+                        ProductItemRow(
+                            product = product,
+                            onClick = { onNavigateToEditProduct(product) }
+                        )
                     }
                 }
             }
@@ -105,9 +116,13 @@ fun ProductViewContent(
 }
 
 @Composable
-fun ProductItemRow(product: Product) {
+fun ProductItemRow(
+    product: Product,
+    onClick: () -> Unit
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
+        onClick = onClick,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Row(
@@ -151,6 +166,7 @@ fun ProductViewPreview() {
         ProductViewContent(
             products = dummyProducts,
             onNavigateToAddProduct = {},
+            onNavigateToEditProduct = {},
             onNavigateBack = {}
         )
     }
@@ -165,6 +181,7 @@ fun ProductViewEmptyPreview() {
         ProductViewContent(
             products = dummyProducts,
             onNavigateToAddProduct = {},
+            onNavigateToEditProduct = {},
             onNavigateBack = {}
         )
     }

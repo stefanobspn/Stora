@@ -32,24 +32,53 @@ class ProductViewModel @Inject constructor(
     var productStock by mutableStateOf("")
         private set
 
+    var editingProduct by mutableStateOf<Product?>(null)
+        private set
+
     fun onNameChange(newName: String) { productName = newName }
     fun onPriceChange(newPrice: String) { productPrice = newPrice }
     fun onStockChange(newStock: String) { productStock = newStock }
+
+    fun setProductForEditing(product: Product?) {
+        editingProduct = product
+        if (product != null) {
+            productName = product.name
+            productPrice = product.price.toString()
+            productStock = product.stock.toString()
+        } else {
+            clearForm()
+        }
+    }
 
     fun saveProduct() {
         val price = productPrice.toDoubleOrNull() ?: 0.0
         val stock = productStock.toIntOrNull() ?: 0
         if (productName.isNotBlank()) {
             viewModelScope.launch {
-                repository.insertProduct(Product(name = productName, price = price, stock = stock))
+                val currentProduct = editingProduct
+                if (currentProduct == null) {
+                    repository.insertProduct(Product(name = productName, price = price, stock = stock))
+                } else {
+                    repository.updateProduct(currentProduct.copy(name = productName, price = price, stock = stock))
+                }
                 clearForm()
             }
         }
     }
 
-    private fun clearForm() {
+    fun deleteProduct() {
+        editingProduct?.let { product ->
+            viewModelScope.launch {
+                repository.deleteProduct(product)
+                clearForm()
+            }
+        }
+    }
+
+    fun clearForm() {
         productName = ""
         productPrice = ""
         productStock = ""
+        editingProduct = null
     }
 }

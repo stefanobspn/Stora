@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,13 +19,24 @@ fun AddProductView(
     viewModel: ProductViewModel,
     onNavigateBack: () -> Unit
 ) {
+    val isEditing = viewModel.editingProduct != null
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Tambah Produk") },
+                title = { Text(if (isEditing) "Edit Produk" else "Tambah Produk") },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Kembali")
+                    }
+                },
+                actions = {
+                    if (isEditing) {
+                        IconButton(onClick = {
+                            viewModel.deleteProduct()
+                            onNavigateBack()
+                        }) {
+                            Icon(Icons.Default.Delete, contentDescription = "Hapus Produk")
+                        }
                     }
                 }
             )
@@ -62,7 +74,7 @@ fun AddProductView(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Simpan Produk")
+                Text(if (isEditing) "Simpan Perubahan" else "Simpan Produk")
             }
         }
     }
