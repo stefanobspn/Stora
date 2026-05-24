@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardView(
-    onNavigateToAddProduct: () -> Unit
+    onNavigateToProduct: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -70,7 +70,7 @@ fun DashboardView(
                     label = "Produk",
                     icon = Icons.AutoMirrored.Filled.List,
                     modifier = Modifier.weight(1f),
-                    onClick = onNavigateToAddProduct
+                    onClick = onNavigateToProduct
                 )
                 DashboardButton(
                     label = "Transaksi",
