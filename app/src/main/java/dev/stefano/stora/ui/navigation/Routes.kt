@@ -28,3 +28,6 @@ object CabangRoute
 
 @Serializable
 object AddCabangRoute
+
+@Serializable
+object AkunRoute

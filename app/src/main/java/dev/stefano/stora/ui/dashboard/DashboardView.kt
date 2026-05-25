@@ -45,7 +45,8 @@ fun DashboardView(
     onNavigateToTransaction: () -> Unit,
     onNavigateToReport: () -> Unit,
     onNavigateToPegawai: () -> Unit,
-    onNavigateToCabang: () -> Unit
+    onNavigateToCabang: () -> Unit,
+    onNavigateToAkun: () -> Unit
 ) {
     val totalRevenue by viewModel.totalRevenue.collectAsState()
 
@@ -135,7 +136,7 @@ fun DashboardView(
                     label = "Akun",
                     icon = Icons.Default.Person,
                     modifier = Modifier.weight(1f),
-                    onClick = onNavigateToPegawai
+                    onClick = onNavigateToAkun
                 )
             }
 

@@ -19,6 +19,7 @@ import dev.stefano.stora.ui.navigation.PegawaiRoute
 import dev.stefano.stora.ui.navigation.AddPegawaiRoute
 import dev.stefano.stora.ui.navigation.CabangRoute
 import dev.stefano.stora.ui.navigation.AddCabangRoute
+import dev.stefano.stora.ui.navigation.AkunRoute
 import dev.stefano.stora.ui.product.ProductView
 import dev.stefano.stora.ui.dashboard.DashboardView
 import dev.stefano.stora.ui.dashboard.DashboardViewModel
@@ -32,6 +33,7 @@ import dev.stefano.stora.ui.pegawai.AddPegawaiView
 import dev.stefano.stora.ui.cabang.CabangView
 import dev.stefano.stora.ui.cabang.CabangViewModel
 import dev.stefano.stora.ui.cabang.AddCabangView
+import dev.stefano.stora.ui.akun.AkunView
 import dev.stefano.stora.ui.shared.ProductViewModel
 import dev.stefano.stora.ui.theme.StoraTheme
 
@@ -69,6 +71,9 @@ class MainActivity : ComponentActivity() {
                             },
                             onNavigateToCabang = {
                                 navController.navigate(CabangRoute)
+                            },
+                            onNavigateToAkun = {
+                                navController.navigate(AkunRoute)
                             }
                         )
                     }
@@ -150,6 +155,14 @@ class MainActivity : ComponentActivity() {
                     composable<AddCabangRoute> {
                         AddCabangView(
                             viewModel = cabangViewModel,
+                            onNavigateBack = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
+
+                    composable<AkunRoute> {
+                        AkunView(
                             onNavigateBack = {
                                 navController.popBackStack()
                             }
