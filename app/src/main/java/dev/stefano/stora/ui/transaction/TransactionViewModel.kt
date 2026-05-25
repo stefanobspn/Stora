@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 data class CartItem(
     val product: Product,
-    var quantity: Int
+    val quantity: Int
 )
 
 @HiltViewModel
@@ -43,9 +43,10 @@ class TransactionViewModel @Inject constructor(
         private set
 
     fun addToCart(product: Product) {
-        val existingItem = _cartItems.find { it.product.id == product.id }
-        if (existingItem != null) {
-            existingItem.quantity += 1
+        val index = _cartItems.indexOfFirst { it.product.id == product.id }
+        if (index != -1) {
+            val existingItem = _cartItems[index]
+            _cartItems[index] = existingItem.copy(quantity = existingItem.quantity + 1)
         } else {
             _cartItems.add(CartItem(product, 1))
         }
@@ -53,12 +54,13 @@ class TransactionViewModel @Inject constructor(
     }
 
     fun removeFromCart(product: Product) {
-        val existingItem = _cartItems.find { it.product.id == product.id }
-        if (existingItem != null) {
+        val index = _cartItems.indexOfFirst { it.product.id == product.id }
+        if (index != -1) {
+            val existingItem = _cartItems[index]
             if (existingItem.quantity > 1) {
-                existingItem.quantity -= 1
+                _cartItems[index] = existingItem.copy(quantity = existingItem.quantity - 1)
             } else {
-                _cartItems.remove(existingItem)
+                _cartItems.removeAt(index)
             }
         }
         calculateTotal()
