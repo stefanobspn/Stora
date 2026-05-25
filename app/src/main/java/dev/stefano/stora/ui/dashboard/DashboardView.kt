@@ -12,8 +12,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Monitor
+import androidx.compose.material.icons.filled.People
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Shop
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -31,10 +33,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-
-
 import java.text.NumberFormat
 import java.util.Locale
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,7 +43,8 @@ fun DashboardView(
     viewModel: DashboardViewModel,
     onNavigateToProduct: () -> Unit,
     onNavigateToTransaction: () -> Unit,
-    onNavigateToReport: () -> Unit
+    onNavigateToReport: () -> Unit,
+    onNavigateToPegawai: () -> Unit
 ) {
     val totalRevenue by viewModel.totalRevenue.collectAsState()
 
@@ -108,10 +110,31 @@ fun DashboardView(
                 )
 
                 DashboardButton(
-                    label = "Member",
-                    icon = Icons.Default.Star,
+                    label = "Pegawai",
+                    icon = Icons.Default.People,
                     modifier = Modifier.weight(1f),
-                    onClick = { /* soon for member */ }
+                    onClick = onNavigateToPegawai
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                DashboardButton(
+                    label = "Cabang",
+                    icon = Icons.Default.Shop,
+                    modifier = Modifier.weight(1f),
+                    onClick = onNavigateToReport
+                )
+
+                DashboardButton(
+                    label = "Akun",
+                    icon = Icons.Default.Person,
+                    modifier = Modifier.weight(1f),
+                    onClick = onNavigateToPegawai
                 )
             }
 

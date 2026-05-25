@@ -15,6 +15,8 @@ import dev.stefano.stora.ui.navigation.DashBoardRoute
 import dev.stefano.stora.ui.navigation.ProductRoute
 import dev.stefano.stora.ui.navigation.TransactionRoute
 import dev.stefano.stora.ui.navigation.ReportRoute
+import dev.stefano.stora.ui.navigation.PegawaiRoute
+import dev.stefano.stora.ui.navigation.AddPegawaiRoute
 import dev.stefano.stora.ui.product.ProductView
 import dev.stefano.stora.ui.dashboard.DashboardView
 import dev.stefano.stora.ui.dashboard.DashboardViewModel
@@ -22,6 +24,9 @@ import dev.stefano.stora.ui.report.ReportView
 import dev.stefano.stora.ui.report.ReportViewModel
 import dev.stefano.stora.ui.transaction.TransactionView
 import dev.stefano.stora.ui.transaction.TransactionViewModel
+import dev.stefano.stora.ui.pegawai.PegawaiView
+import dev.stefano.stora.ui.pegawai.PegawaiViewModel
+import dev.stefano.stora.ui.pegawai.AddPegawaiView
 import dev.stefano.stora.ui.shared.ProductViewModel
 import dev.stefano.stora.ui.theme.StoraTheme
 
@@ -34,6 +39,7 @@ class MainActivity : ComponentActivity() {
             StoraTheme{
                 val navController = rememberNavController()
                 val productViewModel: ProductViewModel = hiltViewModel()
+                val pegawaiViewModel: PegawaiViewModel = hiltViewModel()
 
                 NavHost(
                     navController = navController,
@@ -51,16 +57,9 @@ class MainActivity : ComponentActivity() {
                             },
                             onNavigateToReport = {
                                 navController.navigate(ReportRoute)
-                            }
-                        )
-                    }
-
-                    composable<ReportRoute> {
-                        val reportViewModel: ReportViewModel = hiltViewModel()
-                        ReportView(
-                            viewModel = reportViewModel,
-                            onNavigateBack = {
-                                navController.popBackStack()
+                            },
+                            onNavigateToPegawai = {
+                                navController.navigate(PegawaiRoute)
                             }
                         )
                     }
@@ -69,6 +68,16 @@ class MainActivity : ComponentActivity() {
                         val transactionViewModel: TransactionViewModel = hiltViewModel()
                         TransactionView(
                             viewModel = transactionViewModel,
+                            onNavigateBack = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
+
+                    composable<ReportRoute> {
+                        val reportViewModel: ReportViewModel = hiltViewModel()
+                        ReportView(
+                            viewModel = reportViewModel,
                             onNavigateBack = {
                                 navController.popBackStack()
                             }
@@ -90,6 +99,27 @@ class MainActivity : ComponentActivity() {
                     composable<AddProductRoute> {
                         AddProductView(
                             viewModel = productViewModel,
+                            onNavigateBack = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
+
+                    composable<PegawaiRoute> {
+                        PegawaiView(
+                            viewModel = pegawaiViewModel,
+                            onNavigateToAddPegawai = {
+                                navController.navigate(AddPegawaiRoute)
+                            },
+                            onNavigateBack = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
+
+                    composable<AddPegawaiRoute> {
+                        AddPegawaiView(
+                            viewModel = pegawaiViewModel,
                             onNavigateBack = {
                                 navController.popBackStack()
                             }

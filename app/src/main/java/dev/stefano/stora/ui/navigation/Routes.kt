@@ -16,3 +16,9 @@ object TransactionRoute
 
 @Serializable
 object ReportRoute
+
+@Serializable
+object PegawaiRoute
+
+@Serializable
+object AddPegawaiRoute
