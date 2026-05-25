@@ -13,6 +13,7 @@ import dev.stefano.stora.data.model.PegawaiDao
 import dev.stefano.stora.data.model.ProductDao
 import dev.stefano.stora.data.model.TransactionDao
 import dev.stefano.stora.data.model.MemberDao
+import dev.stefano.stora.data.model.CabangDao
 import dev.stefano.stora.data.repository.PegawaiRepository
 import dev.stefano.stora.data.repository.PegawaiRepositoryImpl
 import dev.stefano.stora.data.repository.ProductRepository
@@ -21,6 +22,8 @@ import dev.stefano.stora.data.repository.TransactionRepository
 import dev.stefano.stora.data.repository.TransactionRepositoryImpl
 import dev.stefano.stora.data.repository.MemberRepository
 import dev.stefano.stora.data.repository.MemberRepositoryImpl
+import dev.stefano.stora.data.repository.CabangRepository
+import dev.stefano.stora.data.repository.CabangRepositoryImpl
 import javax.inject.Singleton
 
 @Module
@@ -47,6 +50,9 @@ object DatabaseModule {
 
     @Provides
     fun provideMemberDao(db: AppDatabase): MemberDao = db.memberDao()
+
+    @Provides
+    fun provideCabangDao(db: AppDatabase): CabangDao = db.cabangDao()
 }
 
 @Module
@@ -67,4 +73,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindMemberRepository(impl: MemberRepositoryImpl): MemberRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindCabangRepository(impl: CabangRepositoryImpl): CabangRepository
 }

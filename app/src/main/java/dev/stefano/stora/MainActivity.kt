@@ -17,6 +17,8 @@ import dev.stefano.stora.ui.navigation.TransactionRoute
 import dev.stefano.stora.ui.navigation.ReportRoute
 import dev.stefano.stora.ui.navigation.PegawaiRoute
 import dev.stefano.stora.ui.navigation.AddPegawaiRoute
+import dev.stefano.stora.ui.navigation.CabangRoute
+import dev.stefano.stora.ui.navigation.AddCabangRoute
 import dev.stefano.stora.ui.product.ProductView
 import dev.stefano.stora.ui.dashboard.DashboardView
 import dev.stefano.stora.ui.dashboard.DashboardViewModel
@@ -27,6 +29,9 @@ import dev.stefano.stora.ui.transaction.TransactionViewModel
 import dev.stefano.stora.ui.pegawai.PegawaiView
 import dev.stefano.stora.ui.pegawai.PegawaiViewModel
 import dev.stefano.stora.ui.pegawai.AddPegawaiView
+import dev.stefano.stora.ui.cabang.CabangView
+import dev.stefano.stora.ui.cabang.CabangViewModel
+import dev.stefano.stora.ui.cabang.AddCabangView
 import dev.stefano.stora.ui.shared.ProductViewModel
 import dev.stefano.stora.ui.theme.StoraTheme
 
@@ -40,6 +45,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val productViewModel: ProductViewModel = hiltViewModel()
                 val pegawaiViewModel: PegawaiViewModel = hiltViewModel()
+                val cabangViewModel: CabangViewModel = hiltViewModel()
 
                 NavHost(
                     navController = navController,
@@ -60,6 +66,9 @@ class MainActivity : ComponentActivity() {
                             },
                             onNavigateToPegawai = {
                                 navController.navigate(PegawaiRoute)
+                            },
+                            onNavigateToCabang = {
+                                navController.navigate(CabangRoute)
                             }
                         )
                     }
@@ -120,6 +129,27 @@ class MainActivity : ComponentActivity() {
                     composable<AddPegawaiRoute> {
                         AddPegawaiView(
                             viewModel = pegawaiViewModel,
+                            onNavigateBack = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
+
+                    composable<CabangRoute> {
+                        CabangView(
+                            viewModel = cabangViewModel,
+                            onNavigateToAddCabang = {
+                                navController.navigate(AddCabangRoute)
+                            },
+                            onNavigateBack = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
+
+                    composable<AddCabangRoute> {
+                        AddCabangView(
+                            viewModel = cabangViewModel,
                             onNavigateBack = {
                                 navController.popBackStack()
                             }

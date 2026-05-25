@@ -22,3 +22,9 @@ object PegawaiRoute
 
 @Serializable
 object AddPegawaiRoute
+
+@Serializable
+object CabangRoute
+
+@Serializable
+object AddCabangRoute

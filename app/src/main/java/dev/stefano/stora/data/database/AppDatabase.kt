@@ -11,10 +11,12 @@ import dev.stefano.stora.data.model.Pegawai
 import dev.stefano.stora.data.model.PegawaiDao
 import dev.stefano.stora.data.model.Member
 import dev.stefano.stora.data.model.MemberDao
+import dev.stefano.stora.data.model.Cabang
+import dev.stefano.stora.data.model.CabangDao
 
 @Database(
-    entities = [Product::class, TransactionEntity::class, TransactionItemEntity::class, Pegawai::class, Member::class],
-    version = 5,
+    entities = [Product::class, TransactionEntity::class, TransactionItemEntity::class, Pegawai::class, Member::class, Cabang::class],
+    version = 6,
     exportSchema = false
 )
 abstract class AppDatabase: RoomDatabase() {
@@ -22,4 +24,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun transactionDao(): TransactionDao
     abstract fun pegawaiDao(): PegawaiDao
     abstract fun memberDao(): MemberDao
+    abstract fun cabangDao(): CabangDao
 }

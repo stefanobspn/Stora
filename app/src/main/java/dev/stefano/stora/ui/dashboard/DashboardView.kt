@@ -44,7 +44,8 @@ fun DashboardView(
     onNavigateToProduct: () -> Unit,
     onNavigateToTransaction: () -> Unit,
     onNavigateToReport: () -> Unit,
-    onNavigateToPegawai: () -> Unit
+    onNavigateToPegawai: () -> Unit,
+    onNavigateToCabang: () -> Unit
 ) {
     val totalRevenue by viewModel.totalRevenue.collectAsState()
 
@@ -127,7 +128,7 @@ fun DashboardView(
                     label = "Cabang",
                     icon = Icons.Default.Shop,
                     modifier = Modifier.weight(1f),
-                    onClick = onNavigateToReport
+                    onClick = onNavigateToCabang
                 )
 
                 DashboardButton(
