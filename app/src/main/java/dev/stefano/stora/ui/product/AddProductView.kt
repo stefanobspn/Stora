@@ -8,9 +8,13 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import dev.stefano.stora.ui.shared.ProductViewModel
+import dev.stefano.stora.utils.CurrencyUtils
+import java.text.NumberFormat
+import java.util.Locale
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,9 +61,13 @@ fun AddProductView(
             )
             Field(
                 value = viewModel.productPrice,
-                onValueChange = { viewModel.onPriceChange(it) },
+                onValueChange = { 
+                    val cleanValue = CurrencyUtils.parseCurrency(it)
+                    viewModel.onPriceChange(cleanValue) 
+                },
                 label = { Text("Harga") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                visualTransformation = CurrencyAmountInputVisualTransformation()
             )
             Field(
                 value = viewModel.productStock,
@@ -86,7 +94,8 @@ fun Field(
     onValueChange: (String) -> Unit,
     label: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     OutlinedTextField(
         value = value,
@@ -94,6 +103,59 @@ fun Field(
         label = label,
         modifier = modifier.fillMaxWidth(),
         keyboardOptions = keyboardOptions,
+        visualTransformation = visualTransformation,
         maxLines = 1
     )
+}
+
+class CurrencyAmountInputVisualTransformation : VisualTransformation {
+    override fun filter(text: AnnotatedString): TransformedText {
+        val cleanText = text.text.replace(Regex("[^\\d]"), "")
+        if (cleanText.isEmpty()) {
+            return TransformedText(AnnotatedString(""), OffsetMapping.Identity)
+        }
+
+        val parsed = cleanText.toDoubleOrNull() ?: 0.0
+        val formatter = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+        formatter.maximumFractionDigits = 0
+        val formatted = formatter.format(parsed).replace("Rp", "Rp ").trim()
+
+        val offsetMapping = object : OffsetMapping {
+            override fun originalToTransformed(offset: Int): Int {
+                val digitsBeforeOffset = text.text.take(offset).count { it.isDigit() }
+                var digitsFound = 0
+                for (i in formatted.indices) {
+                    if (formatted[i].isDigit()) {
+                        digitsFound++
+                    }
+                    if (digitsFound == digitsBeforeOffset && (i + 1 < formatted.length && !formatted[i + 1].isDigit() || i + 1 == formatted.length)) {
+                        return i + 1
+                    }
+                }
+                
+                if (digitsBeforeOffset == 0) {
+                   val firstDigitIndex = formatted.indexOfFirst { it.isDigit() }
+                   return if (firstDigitIndex != -1) firstDigitIndex else 0
+                }
+
+                return formatted.length
+            }
+
+            override fun transformedToOriginal(offset: Int): Int {
+                val digitsBeforeOffset = formatted.take(offset).count { it.isDigit() }
+                var digitsFound = 0
+                for (i in text.text.indices) {
+                    if (text.text[i].isDigit()) {
+                        digitsFound++
+                    }
+                    if (digitsFound == digitsBeforeOffset) {
+                        return i + 1
+                    }
+                }
+                return text.text.length
+            }
+        }
+
+        return TransformedText(AnnotatedString(formatted), offsetMapping)
+    }
 }
